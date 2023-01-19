@@ -1,5 +1,5 @@
 import { IRouteableComponent } from '@aurelia/router';
 
-export class MyApp implements IRouteableComponent {
+export class AuBlog implements IRouteableComponent {
 
 }

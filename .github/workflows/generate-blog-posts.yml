@@ -1,0 +1,29 @@
+name: Generate index.json
+
+on:
+  push:
+    paths:
+      - 'blog/**/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create index.json
+      run: |
+        echo '{ "files": [' > index.json
+        for file in $(find blog -name '*.md' -type f); do
+          echo $(basename $file) 
+          echo "\"$(basename $file)\"," >> index.json
+        done
+        echo ']}' >> index.json
+
+    - name: Upload index.json
+      uses: actions/upload-artifact@v2
+      with:
+        name: index.json
+        path: blog/index.json
