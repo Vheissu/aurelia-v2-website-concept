@@ -18,10 +18,10 @@ jobs:
         files=$(find blog -name '*.md' -printf '"%f",' | sed '$s/,$//')
         echo "[$files]" > blog.json
 
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v8
-        with:
-          author_name: Github Actions
-          author_email: githubactions@github.com
-          message: 'Updating blog.json'
-          add: 'blog.json'
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v8
+      with:
+        author_name: Github Actions
+        author_email: githubactions@github.com
+        message: 'Updating blog.json'
+        add: 'blog.json'
