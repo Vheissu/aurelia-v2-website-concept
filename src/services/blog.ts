@@ -11,16 +11,16 @@ export class BlogService {
         this.http.configure(config => {
             return config
                 .useStandardConfiguration()
-                .withBaseUrl('https://raw.githubusercontent.com/Vheissu/aurelia-v2-website-concept/main/blog/');
+                .withBaseUrl('https://raw.githubusercontent.com/Vheissu/aurelia-v2-website-concept/main/');
         });
     }
 
     loadPost(postName: string) {
-        return this.http.fetch(`${postName}.md`, { cache: 'no-store' }).then(response => response.text());
+        return this.http.fetch(`/blog/${postName}.md`, { cache: 'no-store' }).then(response => response.text());
     }
 
     loadPosts() {
-        return this.http.fetch('index.json', { cache: 'no-store' }).then(response => response.json());
+        return this.http.fetch('blog.json', { cache: 'no-store' }).then(response => response.json());
     }
 
 }

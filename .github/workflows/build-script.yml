@@ -39,3 +39,15 @@ jobs:
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Deploy
+      if: github.ref == 'refs/heads/main'
+      run: |
+        git fetch origin main
+        git checkout gh-pages
+        git merge main
+        npm install
+        npm run build
+        git add -f dist
+        git commit -m "Deploy to GitHub Pages"
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git HEAD:gh-pages --force
