@@ -1,32 +1,27 @@
-name: Build Blog JSON
+name: Build blog.json
 
 on:
   push:
     paths:
-      - "blog/**/*.md"
+      - blog/**/*.md
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Build JSON
+    - name: Build blog.json
       run: |
-        file_names=$(ls blog/*.md)
-        file_list=''
-        for file in $file_names; do
-          file_list="$file_list\"$(basename $file)\","
-        done
-        echo "{\"files\":[${file_list%,}]}" > blog.json
+        files=$(find blog -name '*.md' -printf '"%f",' | sed '$s/,$//')
+        echo "[$files]" > blog.json
 
-    - name: Commit and push JSON
-      run: |
-        git config --local user.email "github-actions@github.com"
-        git config --local user.name "Github Actions"
-        git add blog.json
-        git commit -m "Update blog.json"
-        git push https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git HEAD:$GITHUB_REF
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v8
+        with:
+          author_name: Github Actions
+          author_email: githubactions@github.com
+          message: 'Updating blog.json'
+          add: 'blog.json'
