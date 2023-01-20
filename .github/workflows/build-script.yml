@@ -1,51 +1,21 @@
-name: Build Blog JSON
+name: Build Site to Github Pages
 
 on:
   push:
-    paths:
-      - 'blog/**/*.md'
+    branches:
+    - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Get list of Markdown files
-      run: |
-        cd blog
-        files=($(ls *.md))
-        json_array=()
-        for file in "${files[@]}"
-        do
-          date=$(grep -E '^date: ' "$file" | cut -d' ' -f2)
-          json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date\"}"))
-        done
-        echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > ../blog.json
-
-    - name: Remove trailing comma
-      run: |
-        sed -i '$ s/,$//' blog.json
-
-    - name: Commit changes
-      run: |
-        git config --global user.email "no-reply@github.com"
-        git config --global user.name "GitHub Actions"
-        git add blog.json
-        git commit -m "Update blog.json"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and Deploy
-      if: github.ref == 'refs/heads/main'
       run: |
         git fetch origin main
+        git branch -f gh-pages origin/main
         git checkout gh-pages
-        git merge main
         npm install
         npm run build
         git add -f dist
