@@ -23,7 +23,7 @@ jobs:
           date=$(grep -E '^date: ' "$file" | cut -d' ' -f2)
           json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date\"}"))
         done
-        echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > ../static/blog.json
+        echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > static/blog.json
 
     - name: Remove trailing comma
       run: |
