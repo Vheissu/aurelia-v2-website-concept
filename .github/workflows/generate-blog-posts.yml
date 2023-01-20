@@ -1,9 +1,9 @@
-name: Generate blog.json
+name: Generate Blog JSON
 
 on:
   push:
     paths:
-      - 'blog/**/*.md'
+      - blog/**/*.md
 
 jobs:
   build:
@@ -13,17 +13,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Create blog.json
+    - name: Generate Blog JSON
       run: |
-        echo '{ "files": [' > blog.json
-        for file in $(find blog -name '*.md' -type f); do
-          echo $(basename $file) 
-          echo "\"$(basename $file)\"," >> blog.json
+        echo '[' > blog.json
+        for file in blog/*.md; do
+          echo "\"${file##*/}\"," >> blog.json
         done
-        echo ']}' >> blog.json
+        sed -i '$ s/,$//' blog.json
+        echo ']' >> blog.json
 
-    - name: Upload blog.json
-      uses: actions/upload-artifact@v3
+    - name: Commit and Push Changes
+      uses: actions/git@v3
       with:
-        name: blog.json
-        path: blog.json
+        args: commit -am 'Update blog.json' && push
+
