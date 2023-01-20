@@ -18,6 +18,10 @@ jobs:
         git checkout gh-pages
         npm install
         npm run build
-        git add -f dist
-        git commit -m "Deploy to GitHub Pages"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git HEAD:gh-pages --force
+        if ! git diff-index --quiet HEAD --; then
+          git add -f dist
+          git commit -m "Deploy to GitHub Pages"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git HEAD:gh-pages --force
+        else
+          echo "Nothing to deploy"
+        fi
