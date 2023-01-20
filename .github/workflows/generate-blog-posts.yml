@@ -16,14 +16,14 @@ jobs:
     - name: Get list of Markdown files
       run: |
         cd blog
-        files=($(ls -t *.md))
+        files=($(ls *.md))
         json_array=()
         for file in "${files[@]}"
         do
-          last_modified=$(stat -c '%y' "$file")
-          json_array+=($(echo "{\"file\":\"$file\",\"last_modified\":\"$last_modified\"}"))
+          date=$(grep -E '^date: ' "$file" | cut -d' ' -f2)
+          json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date\"}"))
         done
-        echo "[$(IFS=,; echo "${json_array[*]}")]" > ../blog.json
+        echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > ../blog.json
 
     - name: Remove trailing comma
       run: |
