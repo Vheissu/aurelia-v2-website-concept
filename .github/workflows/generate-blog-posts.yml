@@ -19,9 +19,12 @@ jobs:
         echo "[$files]" > blog.json
 
     - name: Commit changes
-      uses: EndBug/add-and-commit@v8
-      with:
-        author_name: Github Actions
-        author_email: githubactions@github.com
-        message: 'Updating blog.json'
-        add: 'blog.json'
+      run: |
+        git config --local user.email "github-actions@example.com"
+        git config --local user.name "Github Actions"
+        git add blog.json
+        git commit -m "Build blog.json"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
