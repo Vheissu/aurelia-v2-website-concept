@@ -29,6 +29,6 @@ jobs:
         git config --global user.name "GitHub Actions"
         git add blog.json
         git commit -m "Update blog.json"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.GITHUB_REPOSITORY }}.git
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
