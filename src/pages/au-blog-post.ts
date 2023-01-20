@@ -13,6 +13,7 @@ export class AuBlogPost implements IRouteableComponent {
     
         public async canLoad(parameters: Record<string, string>) {
             try {
+                console.log(parameters);
                 this.postName = parameters.postName;
                 this.post = await this.blogService.loadPost(this.postName);
 
