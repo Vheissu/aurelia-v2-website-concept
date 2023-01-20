@@ -1,4 +1,4 @@
-name: Generate index.json
+name: Generate blog.json
 
 on:
   push:
@@ -11,19 +11,19 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Create index.json
+    - name: Create blog.json
       run: |
-        echo '{ "files": [' > index.json
+        echo '{ "files": [' > blog.json
         for file in $(find blog -name '*.md' -type f); do
           echo $(basename $file) 
-          echo "\"$(basename $file)\"," >> index.json
+          echo "\"$(basename $file)\"," >> blog.json
         done
-        echo ']}' >> index.json
+        echo ']}' >> blog.json
 
-    - name: Upload index.json
-      uses: actions/upload-artifact@v2
+    - name: Upload blog.json
+      uses: actions/upload-artifact@v3
       with:
-        name: index.json
-        path: blog/index.json
+        name: blog.json
+        path: blog.json
