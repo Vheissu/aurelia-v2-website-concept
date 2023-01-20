@@ -1,33 +1,31 @@
-name: Generate Blog JSON
+name: Build Blog
 
 on:
   push:
     paths:
-      - blog/**/*.md
+      - 'blog/**/*.md'
 
 jobs:
-  build:
+  build-blog:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Generate Blog JSON
+    - name: Build blog.json
       run: |
-        echo '[' > blog.json
-        for file in blog/*.md; do
-          echo "\"${file##*/}\"," >> blog.json
+        files=$(find blog -name '*.md')
+        echo "[" > blog.json
+        for file in $files; do
+          echo "\"$file\"," >> blog.json
         done
         sed -i '$ s/,$//' blog.json
-        echo ']' >> blog.json
+        echo "]" >> blog.json
 
-    - name: Commit and Push Changes
+    - name: Commit and push blog.json
       run: |
-        git config --local user.email "dwaynecharrington@gmail.com"
-        git config --local user.name "Dwayne Charrington"
+        git config --local user.email "action@github.com"
+        git config --local user.name "Github Action"
         git add blog.json
         git commit -m "Update blog.json"
         git push
-
-
