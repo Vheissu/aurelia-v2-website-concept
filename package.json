@@ -9,7 +9,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@aurelia/router": "latest",
-    "aurelia": "latest"
+    "aurelia": "latest",
+    "copy-webpack-plugin": "^11.0.0"
   },
   "devDependencies": {
     "@aurelia/testing": "latest",
