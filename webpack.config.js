@@ -83,11 +83,6 @@ module.exports = function(env, { analyze }) {
       new Dotenv({
         path: `./.env${production ? '' :  '.' + (process.env.NODE_ENV || 'development')}`,
       }),
-      new CopyWebpackPlugin({
-        patterns: [
-          { from: './src/_redirects', to: '_redirects' }
-        ],
-      }),
       analyze && new BundleAnalyzerPlugin()
     ].filter(p => p)
   }
