@@ -3,7 +3,7 @@ name: Build Blog JSON
 on:
   push:
     paths:
-      - 'blog/**/*.md'
+      - 'blog-posts/**/*.md'
 
 jobs:
   build:
