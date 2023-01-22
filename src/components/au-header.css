@@ -1,0 +1,55 @@
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+.nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.nav li {
+    position: relative;
+  }
+  
+  .nav li a {
+    text-decoration: none;
+    padding: 10px;
+    color: #444;
+  }
+  
+  .nav li a:hover {
+    background-color: #eee;
+  }
+  
+  .nav li ul {
+    position: absolute;
+    min-width: 200px;
+    background-color: #eee;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  .nav li:hover ul {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .nav li ul li {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+  }

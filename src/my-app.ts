@@ -31,4 +31,18 @@ export class MyApp implements IRouteableComponent {
 
   ];
 
+  attached() {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const toggleDarkMode = () => {
+      if (prefersDark.matches) {
+          document.body.classList.add("dark-mode");
+      } else {
+          document.body.classList.remove("dark-mode");
+      }
+    };
+
+    prefersDark.addEventListener("change", () => toggleDarkMode());
+  }
+
 }

@@ -1,0 +1,63 @@
+/* Reset default margins and padding */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set base font-size and line-height */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Remove browser specific styles for headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+/* Remove browser specific styles for lists */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove browser specific styles for links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove browser specific styles for images */
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+body {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
