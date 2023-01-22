@@ -9,12 +9,12 @@ export class MyApp implements IRouteableComponent {
       id: 'home',
     },
     {
-      path: 'blog',
+      path: 'blog/posts',
       component: () => import('./pages/au-blog'),
       id: 'blog',
     },
     {
-      path: 'blog/:postName',
+      path: 'blog/post/:postName',
       component: () => import('./pages/au-blog-post'),
       id: 'blog-post',
     }
