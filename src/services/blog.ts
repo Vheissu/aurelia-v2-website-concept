@@ -1,5 +1,5 @@
 import { DI } from 'aurelia';
-import { IHttpClient } from '@aurelia/fetch-client';
+import { HttpClient } from '@aurelia/fetch-client';
 import { newInstanceOf } from '@aurelia/kernel';
 
 export const IBlogService = DI.createInterface<IBlogService>('IBlogService', x => x.singleton(BlogService));
@@ -7,7 +7,7 @@ export type IBlogService = BlogService;
 
 export class BlogService {
 
-    constructor(@newInstanceOf(IHttpClient) private readonly http: IHttpClient) {
+    constructor(@newInstanceOf(HttpClient) private readonly http: HttpClient) {
         this.http.configure(config => {
             return config
                 .useStandardConfiguration()
