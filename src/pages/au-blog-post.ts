@@ -1,5 +1,6 @@
 import { IRouteableComponent, Parameters } from '@aurelia/router';
 import { IBlogService } from '../services/blog';
+import { marked } from 'marked';
 
 export class AuBlogPost implements IRouteableComponent {
     
@@ -12,12 +13,10 @@ export class AuBlogPost implements IRouteableComponent {
 
         public async loading(parameters: Parameters) {
             try {
-                console.log(parameters);
-                this.postName = parameters.postName as string;
-    
-                this.post = await this.blogService.loadPost(this.postName);
+              this.postName = parameters.postName as string;
+              this.post = marked.parse(await this.blogService.loadPost(this.postName));
             } catch (error) {
-                console.log(error);
+              console.error(error);
             }
-        }
+        }          
 }
