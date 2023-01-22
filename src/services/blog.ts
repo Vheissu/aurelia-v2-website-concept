@@ -1,9 +1,9 @@
 import { DI } from 'aurelia';
-import { IHttpClient, json } from '@aurelia/fetch-client';
+import { IHttpClient } from '@aurelia/fetch-client';
 import { newInstanceOf } from '@aurelia/kernel';
 
 export const IBlogService = DI.createInterface<IBlogService>('IBlogService', x => x.singleton(BlogService));
-export interface IBlogService extends BlogService {}
+export type IBlogService = BlogService;
 
 export class BlogService {
 
@@ -15,7 +15,7 @@ export class BlogService {
     }
 
     loadPost(postName: string) {
-        return this.http.fetch(`/blog/${postName}.md`, { cache: 'no-store' }).then(response => response.text());
+        return this.http.fetch(`/blog-posts/${postName}.md`, { cache: 'no-store' }).then(response => response.text());
     }
 
     loadPosts() {

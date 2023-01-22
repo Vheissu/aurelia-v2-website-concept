@@ -11,9 +11,13 @@ export class AuBlogPost implements IRouteableComponent {
         }
 
         public async loading(parameters: Parameters) {
-            console.log(parameters);
-            this.postName = parameters.postName as string;
-            
-            this.post = await this.blogService.loadPost(this.postName);
+            try {
+                console.log(parameters);
+                this.postName = parameters.postName as string;
+    
+                this.post = await this.blogService.loadPost(this.postName);
+            } catch (error) {
+                console.log(error);
+            }
         }
 }

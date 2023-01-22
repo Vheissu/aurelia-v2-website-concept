@@ -87,7 +87,7 @@ module.exports = function(env, { analyze }) {
         patterns: [
           { from: './src/_redirects', to: '' },
           { from: './static/blog.json', to: 'static' },
-          { from: './blog', to: 'blog' },
+          { from: './blog-posts', to: 'blog-posts' },
         ],
       }),
       analyze && new BundleAnalyzerPlugin()
