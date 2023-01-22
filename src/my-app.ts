@@ -17,6 +17,16 @@ export class MyApp implements IRouteableComponent {
       path: 'blog/:year/:month/:date/:postName',
       component: () => import('./pages/au-blog-post'),
       id: 'blog-post',
+    },
+    {
+      path: 'about/faq',
+      component: () => import('./pages/au-faq'),
+      id: 'faq',
+    },
+    {
+      path: 'sponsor',
+      component: () => import('./pages/au-sponsor'),
+      id: 'sponsor',
     }
 
   ];
