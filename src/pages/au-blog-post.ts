@@ -14,10 +14,10 @@ export class AuBlogPost implements IRouteableComponent {
         public async loading(parameters: Parameters) {
             try {
               this.postName = parameters.postName as string;
-              this.post = await this.blogService.loadPost(this.postName);
-              this.post = marked.parse(this.post.replace(/---[\s\S]*?---/, ''));
+              const post = await this.blogService.loadPost(this.postName);
+              this.post = marked.parse(post.replace(/---[\s\S]*?---/, ''));
             } catch (error) {
               console.error(error);
             }
-        }          
+        }                  
 }
