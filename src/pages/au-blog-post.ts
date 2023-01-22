@@ -14,7 +14,8 @@ export class AuBlogPost implements IRouteableComponent {
         public async loading(parameters: Parameters) {
             try {
               this.postName = parameters.postName as string;
-              this.post = marked.parse(await this.blogService.loadPost(this.postName));
+              this.post = await this.blogService.loadPost(this.postName);
+              this.post = marked.parse(this.post.replace(/---[\s\S]*?---/, ''));
             } catch (error) {
               console.error(error);
             }
