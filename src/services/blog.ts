@@ -11,7 +11,6 @@ export class BlogService {
         this.http.configure(config => {
             return config
                 .useStandardConfiguration()
-                .withBaseUrl('https://raw.githubusercontent.com/Vheissu/aurelia-v2-website-concept/main/');
         });
     }
 
@@ -20,7 +19,7 @@ export class BlogService {
     }
 
     loadPosts() {
-        return this.http.fetch('blog.json', { cache: 'no-store' }).then(response => response.json());
+        return this.http.fetch('/static/blog.json', { cache: 'no-store' }).then(response => response.json());
     }
 
 }
