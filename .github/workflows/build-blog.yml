@@ -27,9 +27,9 @@ jobs:
           year=$(date -d "$date_string" +%Y)
           month=$(date -d "$date_string" +%m)
           day=$(date -d "$date_string" +%d)
-          json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date_string\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\"}"))
+          json_array+=("{\"file\":\"$file\",\"date\":\"$date_string\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\"}")
         done
-        echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > ../static/blog.json
+        printf "[%s]" "$(IFS=,; printf '%s\n' "${json_array[@]}")" > ../static/blog.json
 
     - name: Remove trailing comma
       run: |
