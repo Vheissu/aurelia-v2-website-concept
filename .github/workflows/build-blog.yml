@@ -20,12 +20,14 @@ jobs:
         json_array=()
         for file in "${files[@]}"
         do
+          title=$(grep -E '^title: ' "$file" | cut -d' ' -f2)
+          slug=$(basename "$file" .md)
           date_string=$(grep -E '^date: ' "$file" | cut -d' ' -f2)
           # Use the date command to extract the year, month, and date
           year=$(date -d "$date_string" +%Y)
           month=$(date -d "$date_string" +%m)
           day=$(date -d "$date_string" +%d)
-          json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date_string\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\"}"))
+          json_array+=($(echo "{\"file\":\"$file\",\"date\":\"$date_string\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\"}"))
         done
         echo "[$(IFS=,; echo "${json_array[*]}" | jq -s -c 'sort_by(.date)')]" > ../static/blog.json
 

@@ -18,8 +18,18 @@ export class BlogService {
         return this.http.fetch(`/blog-posts/${postName}.md`, { cache: 'no-store' }).then(response => response.text());
     }
 
-    loadPosts() {
-        return this.http.fetch('/static/blog.json', { cache: 'no-store' }).then(response => response.json());
+    async loadPosts() {
+        const response = await this.http.fetch('/static/blog.json', { cache: 'no-store' });
+        const posts = await response.json();
+
+        // Sort the posts by date latest
+        posts.sort((a, b) => {
+            const aDate = new Date(a.date);
+            const bDate = new Date(b.date);
+            return bDate.getTime() - aDate.getTime();
+        });
+
+        return posts;
     }
 
 }
