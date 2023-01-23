@@ -35,9 +35,9 @@ jobs:
           if [ -z "$status" ]; then
             status="draft"
           fi
-          year=$(date -d "$publishedAt" +%Y)
-          month=$(date -d "$publishedAt" +%m)
-          day=$(date -d "$publishedAt" +%d)
+          year=$(date -d "$(echo $publishedAt | sed 's/T.*Z//')" +%Y)
+          month=$(date -d "$(echo $publishedAt | sed 's/T.*Z//')" +%m)
+          day=$(date -d "$(echo $publishedAt | sed 's/T.*Z//')" +%d)
           json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
         done
         printf "[%s]" "$(IFS=,; printf '%s\n' "${json_array[@]}")" > ../static/blog.json

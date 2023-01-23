@@ -18,4 +18,4 @@ This is an example blog post. It doesn't do much right now.
 
 ## Sub heading
 
-Hello world again. Testing words.
+Hello world again. Testing words. Additional text.
