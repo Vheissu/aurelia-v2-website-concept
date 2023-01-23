@@ -1,7 +1,8 @@
 <div>
+    <h1>Blog</h1>
     <ul>
         <li repeat.for="post of posts">
-            <a load="blog/${post.slug}">${post.title}</a>
+            <a load="/blog/${post.year}/${post.month}/${post.day}/${post.slug}">${post.title}</a>
         </li>
     </ul>
 </div>

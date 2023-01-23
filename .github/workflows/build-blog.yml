@@ -21,13 +21,23 @@ jobs:
         for file in "${files[@]}"
         do
           title=$(grep '^title: ' "$file" | sed -e 's/^title: //')
-          slug=$(basename "$file" .md)
-          date_string=$(grep -E '^date: ' "$file" | cut -d' ' -f2)
-          # Use the date command to extract the year, month, and date
-          year=$(date -d "$date_string" +%Y)
-          month=$(date -d "$date_string" +%m)
-          day=$(date -d "$date_string" +%d)
-          json_array+=("{\"file\":\"$file\",\"date\":\"$date_string\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\"}")
+          if ! grep -q '^slug: ' "$file"; then
+            slug=$(basename "$file" .md)
+          else
+            slug=$(grep -E '^slug: ' "$file" | sed -e 's/^slug: //')
+          fi
+          author_name=$(grep -E '^author: ' "$file" | awk -F'name: ' '{print $2}' | awk -F', ' '{print $1}')
+          description=$(grep -E '^description: ' "$file" | sed -e 's/^description: //')
+          publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
+          updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
+          status=$(grep -E '^status: ' "$file" | sed -e 's/^status: //')
+          if [ -z "$status" ]; then
+            status="draft"
+          fi
+          year=$(date -d "$publishedAt" +%Y)
+          month=$(date -d "$publishedAt" +%m)
+          day=$(date -d "$publishedAt" +%d)
+          json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"title\":\"$title\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
         done
         printf "[%s]" "$(IFS=,; printf '%s\n' "${json_array[@]}")" > ../static/blog.json
 
