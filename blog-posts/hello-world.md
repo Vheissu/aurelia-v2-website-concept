@@ -18,4 +18,4 @@ This is an example blog post. It doesn't do much right now.
 
 ## Sub heading
 
-Sub content. More. SED
+Sub content.
