@@ -28,7 +28,7 @@ jobs:
           fi
           author_name=$(grep -E '^  name: ' "$file" | sed -e 's/^  name: //')
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
-          description=$(grep -A1 '^description: ' "$file" | tail -1 | sed 's/^[ \t]*//' | tr -s '\n')
+          description=$(grep -oP '(?<=description: ).*' "$file" | sed 's/^[ \t]*//' | sed 's/>-//')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
