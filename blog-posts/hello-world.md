@@ -10,4 +10,4 @@ This is an example blog post. It doesn't do much right now.
 
 ## Sub heading
 
-Hello world again. Just another post. 
+Hello world again.
