@@ -28,7 +28,7 @@ jobs:
           fi
           author_name=$(grep -E '^  name: ' "$file" | sed -e 's/^  name: //')
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
-          description=$(awk -v RS='' '/^description: /{gsub(/^description: |^[ \t]*>-*/,"");print;exit;}' "$file")
+          description=$(awk '{if ($1 ~ /^>-/) {gsub(/^[ \t]*>-*/,"");gsub(/^[ \t]+/,"");print $0}}' "$file")
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
@@ -36,9 +36,9 @@ jobs:
           if [ -z "$status" ]; then
             status="draft"
           fi
-          year=$(echo "$year" | sed "s/^'//")
+          year=$(echo "$publishedAt" | awk -F'-' '{print $1}')
+          day=$(echo "$publishedAt" | awk -F'-' '{print $3}')
           month=$(echo $publishedAt | awk -F'-' '{print $2}')
-          day=$(echo "$day" | sed "s/'$//")
           json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"name\":\"$name\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
         done
         printf "[%s]" "$(IFS=,; printf '%s\n' "${json_array[@]}")" > ../static/blog.json
