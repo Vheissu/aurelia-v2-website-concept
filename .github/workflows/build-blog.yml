@@ -29,6 +29,7 @@ jobs:
           author_name=$(grep -E '^author: ' "$file" | awk -F'name: ' '{print $2}' | awk -F', ' '{print $1}')
           description=$(grep -E '^description: ' "$file" | sed -e 's/^description: //')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
+          publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
           status=$(grep -E '^status: ' "$file" | sed -e 's/^status: //')
           if [ -z "$status" ]; then
