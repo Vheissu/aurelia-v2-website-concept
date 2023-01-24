@@ -28,7 +28,22 @@ jobs:
           fi
           author_name=$(grep -E '^  name: ' "$file" | sed -e 's/^  name: //')
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
-          description=$(awk '{if ($1 ~ /^>-/) {gsub(/^[ \t]*>-*/,"");gsub(/^[ \t]+/,"");print $0}}' "$file")
+          description=''
+          description_start=false
+
+          while read -r line
+          do
+            if [[ $line =~ ^>-.* ]]; then
+              description_start=true
+              continue
+            elif [[ $line =~ ^[a-zA-Z]+:.* ]]; then
+              description_start=false
+            fi
+            if [[ $description_start == true ]]; then
+              description+="$line\n"
+            fi
+          done < $file
+
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
@@ -36,8 +51,8 @@ jobs:
           if [ -z "$status" ]; then
             status="draft"
           fi
-          year=$(echo "$publishedAt" | awk -F'-' '{print $1}')
-          day=$(echo "$publishedAt" | awk -F'-' '{print $3}')
+          year=$(echo "$publishedAt" | awk -F'-' '{print $1}' | sed "s/^'//" | sed "s/'$//")
+          day=$(echo "$publishedAt" | awk -F'-' '{print $3}' | sed "s/^'//" | sed "s/'$//")
           month=$(echo $publishedAt | awk -F'-' '{print $2}')
           json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"name\":\"$name\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
         done
