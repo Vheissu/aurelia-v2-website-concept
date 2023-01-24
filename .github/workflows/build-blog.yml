@@ -32,16 +32,16 @@ jobs:
           description_start=false
           while read -r line
           do
-            if [[ $line =~ ^description: >-.* ]]; then
+            if echo "$line" | grep -q "^description: >-"; then
               description_start=true
-              line=${line//description: >-}
-            elif [[ $line =~ ^[a-zA-Z]+:.* ]]; then
+              line=$(echo "$line" | sed 's/^description: >-//')
+            elif echo "$line" | grep -q "^[a-zA-Z]*:"; then
               description_start=false
             fi
             if [[ $description_start == true ]]; then
               description+="$line\n"
             fi
-          done < $file
+          done < "$file"
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
