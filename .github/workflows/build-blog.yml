@@ -43,6 +43,7 @@ jobs:
               description+="$line\n"
             fi
           done < "$file"
+          description=$(echo "$description" | sed 's/^[ \t]*//')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
