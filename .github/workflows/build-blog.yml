@@ -30,10 +30,9 @@ jobs:
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
           description=''
           description_start=false
-
           while read -r line
           do
-            if [[ $line =~ ^>-.* ]]; then
+            if [[ $line =~ ^>.* ]]; then
               description_start=true
               continue
             elif [[ $line =~ ^[a-zA-Z]+:.* ]]; then
@@ -43,7 +42,6 @@ jobs:
               description+="$line\n"
             fi
           done < $file
-
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
