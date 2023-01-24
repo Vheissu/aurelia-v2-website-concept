@@ -32,10 +32,10 @@ jobs:
           description_start=false
           while read -r line
           do
-            if [[ $line =~ ^'>-'.* ]]; then
+            if [[ $line =~ ^description: >-.* ]]; then
               description_start=true
-              continue
-            elif [[ $line =~ ^[a-zA-Z]+: ]]; then
+              line=${line//description: >-}
+            elif [[ $line =~ ^[a-zA-Z]+:.* ]]; then
               description_start=false
             fi
             if [[ $description_start == true ]]; then
