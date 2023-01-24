@@ -19,7 +19,3 @@ This is an example blog post. It doesn't do much right now.
 ## Sub heading
 
 Sub content.
-
-### Sub sub heading
-
-Content

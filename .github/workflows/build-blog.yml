@@ -35,7 +35,7 @@ jobs:
             if [[ $line =~ ^>.* ]]; then
               description_start=true
               continue
-            elif [[ $line =~ ^[a-zA-Z]+:.* ]]; then
+            elif [[ $line =~ ^[a-zA-Z]+: ]]; then
               description_start=false
             fi
             if [[ $description_start == true ]]; then
