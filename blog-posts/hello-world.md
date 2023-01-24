@@ -14,4 +14,4 @@ status: publish
 
 # Hello World
 
-This is an example blog post. It doesn't do much right now.
+This is an example blog post. Hello world!
