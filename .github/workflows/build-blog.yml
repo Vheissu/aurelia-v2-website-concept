@@ -32,7 +32,7 @@ jobs:
           description_start=false
           while read -r line
           do
-            if [[ $line =~ ^>.* ]]; then
+            if [[ $line =~ ^'>-'.* ]]; then
               description_start=true
               continue
             elif [[ $line =~ ^[a-zA-Z]+: ]]; then
