@@ -28,7 +28,7 @@ jobs:
           fi
           author_name=$(grep -E '^  name: ' "$file" | sed -e 's/^  name: //')
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
-          description=''
+          description=$(echo -n "")
           description_start=false
           while read -r line
           do
@@ -40,12 +40,12 @@ jobs:
             fi
             if [[ $description_start == true ]]; then
               line=$(echo "$line" | sed 's/^[ \t]*//')
-              description+="$line\n"
+              description+="$(echo $line | tr -d '\n')\n"
             fi
           done < "$file"
           description=$(echo "$description" | tr -d '\n')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
-          publishedAt=$(echo $publishedAt | sed 's/T.*Z//')
+          publishedAt=$(echo $publishedAt | sed "s/^'//" | sed "s/'$//")
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
           status=$(grep -E '^status: ' "$file" | sed -e 's/^status: //')
           if [ -z "$status" ]; then
