@@ -15,7 +15,3 @@ status: publish
 # Hello World
 
 This is an example blog post. It doesn't do much right now.
-
-## Sub heading
-
-fsfsdf  
