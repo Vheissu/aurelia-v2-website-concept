@@ -30,11 +30,12 @@ jobs:
           author_url=$(grep -E '^  url: ' "$file" | sed -e 's/^  url: //')
           description=$(echo -n "")
           description_start=false
+          IFS=
           while read -r line
           do
             if echo "$line" | grep -q "^description: >-"; then
               description_start=true
-              line=$(echo "$line" | sed 's/^description: >-//')
+              line=$(echo "$line" | sed -e 's/^description: >-//' -e 's/^[ \t]*//')
             elif echo "$line" | grep -q "^[a-zA-Z]*:"; then
               description_start=false
             fi
