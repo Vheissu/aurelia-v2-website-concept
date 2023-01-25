@@ -53,7 +53,7 @@ jobs:
             status="draft"
           fi
           year=$(echo "$publishedAt" | awk -F'-' '{print $1}' | sed "s/^'//" | sed "s/'$//")
-          day=$(echo $publishedAt | awk -F'-' '{print $3}')
+          day=$(echo $publishedAt | awk -F'-' '{print $3}' | awk -F'T' '{print $1}')
           day=$(echo "$day" | sed "s/^'//" | sed "s/'$//")
           month=$(echo $publishedAt | awk -F'-' '{print $2}')
           json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"name\":\"$name\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
