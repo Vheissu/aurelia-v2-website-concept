@@ -39,7 +39,7 @@ jobs:
               description_start=false
             fi
             if [[ $description_start == true ]]; then
-              description+="$line"
+              description+="$(echo -e "$line")"
             fi
           done < "$file"
           description=$(echo "$description" | sed -e 's/^\n//')
