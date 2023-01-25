@@ -40,19 +40,21 @@ jobs:
             fi
             if [[ $description_start == true ]]; then
               line=$(echo "$line" | sed 's/^[ \t]*//')
-              description+="$(echo $line | tr -d '\n')\n"
+              description+="$(echo $line | sed -e 's/^[ \t]*//')"
             fi
           done < "$file"
-          description=$(echo "$description" | tr -d '\n')
+          description=$(echo "$description" | sed 's/^\n//')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed "s/^'//" | sed "s/'$//")
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
+          updatedAt=$(echo $updatedAt | sed "s/^'//" | sed "s/'$//")
           status=$(grep -E '^status: ' "$file" | sed -e 's/^status: //')
           if [ -z "$status" ]; then
             status="draft"
           fi
           year=$(echo "$publishedAt" | awk -F'-' '{print $1}' | sed "s/^'//" | sed "s/'$//")
-          day=$(echo "$publishedAt" | awk -F'-' '{print $3}' | sed "s/^'//" | sed "s/'$//")
+          day=$(echo $publishedAt | awk -F'-' '{print $3}')
+          day=$(echo "$day" | sed "s/^'//" | sed "s/'$//")
           month=$(echo $publishedAt | awk -F'-' '{print $2}')
           json_array+=("{\"file\":\"$file\",\"year\":\"$year\",\"month\":\"$month\",\"day\":\"$day\",\"name\":\"$name\",\"slug\":\"$slug\",\"author_name\":\"$author_name\",\"author_url\":\"$author_url\",\"description\":\"$description\",\"updatedAt\":\"$updatedAt\",\"publishedAt\":\"$publishedAt\",\"status\":\"$status\"}")
         done
