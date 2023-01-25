@@ -39,10 +39,10 @@ jobs:
               description_start=false
             fi
             if [[ $description_start == true ]]; then
-              description+="$(echo -e "$line")"
+              description+="$line"
             fi
           done < "$file"
-          description=$(echo "$description" | sed -e 's/^\n//')
+          description=$(echo "$description" | sed -e 's/^[ \t]*//')
           publishedAt=$(grep -E '^publishedAt: ' "$file" | sed -e 's/^publishedAt: //')
           publishedAt=$(echo $publishedAt | sed "s/^'//" | sed "s/'$//")
           updatedAt=$(grep -E '^updatedAt: ' "$file" | sed -e 's/^updatedAt: //')
